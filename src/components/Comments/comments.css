@@ -1,0 +1,15 @@
+.comments {
+	overflow: auto;
+	color: white;
+	height: 100%;
+	scrollbar-width: none; /*to work in moz*/
+}
+
+.comments > div > h3 {
+	margin-bottom: 2rem;
+	font-size: 0.9rem;
+}
+
+.comments::-webkit-scrollbar {
+	display: none;
+}
