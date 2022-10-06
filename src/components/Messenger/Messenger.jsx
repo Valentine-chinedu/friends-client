@@ -9,7 +9,7 @@ import {
 } from '../../features/messageSlice';
 import SingleChat from '../SingleChat/SingleChat';
 import Input from '../Input/Input';
-import { dp } from '../../assets';
+import dp from '../../assets/dp.jpg';
 import './messenger.css';
 import Options from '../Options/Options';
 

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 //utilities
 import { io } from 'socket.io-client';
+import useFetch from './hooks/useFetch';
 import Cookies from 'js-cookie';
-import useFetch from './hooks/useFetch.js';
 import SERVER_URI from './serverUri';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from './features/userSlice.js';
+import { login } from './features/userSlice';
 import { setSocket } from './features/socketSlice';
-import { showModal } from './features/modalSlice.js';
+import { showModal } from './features/modalSlice';
 import {
 	addMessages,
 	clearMessage,
