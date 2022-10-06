@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { optionsIcon } from '../../assets';
 import './options.css';
 
 const Options = ({ options }) => {
@@ -27,7 +26,16 @@ const Options = ({ options }) => {
 
 	return (
 		<div className='options' onClick={() => setIsOptionsVisible((val) => !val)}>
-			<img src={optionsIcon} alt='options' className='options__icon' />
+			<svg
+				className='options__icon'
+				xmlns='http://www.w3.org/2000/svg'
+				viewBox='0 0 24 24'
+				width='24'
+				height='24'
+			>
+				<path fill='none' d='M0 0h24v24H0z' />
+				<path d='M5 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm14 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z' />
+			</svg>
 			<ul className={isOptionsVisible ? 'show' : ''}>
 				{Object.entries(options).map(([title, handler], i) => (
 					<li onClick={() => handleClick(handler)} key={i}>

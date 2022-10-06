@@ -1,5 +1,5 @@
 import React from 'react';
-import { dp } from '../../assets';
+import dp from '../../assets/dp.jpg';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '../../features/modalSlice';

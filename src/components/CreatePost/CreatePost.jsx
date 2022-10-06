@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { sendIcon, fileIcon } from '../../assets';
 import { useDispatch } from 'react-redux';
 import { addPost, updatePost } from '../../features/postSlice';
 import useFetch from '../../hooks/useFetch';
 import Compress from 'compress.js';
-import { closeIcon } from '../../assets/index';
 import './createpost.css';
 
 const initialForm = { image: null, preview: null, caption: '' };
@@ -79,14 +77,30 @@ const CreatePost = ({ post, id, close }) => {
 							className='close-icon'
 							onClick={() => setForm({ ...form, image: null, preview: null })}
 						>
-							<img src={closeIcon} alt='remove' />
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								viewBox='0 0 24 24'
+								width='24'
+								height='24'
+							>
+								<path fill='none' d='M0 0h24v24H0z' />
+								<path d='M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z' />
+							</svg>
 						</div>
 					</div>
 				)}
 				<div className='btns'>
 					<label htmlFor={id || 'image'} aria-label='select file'>
 						<div>
-							<img src={fileIcon} alt='select file' />
+							<svg
+								xmlns='http://www.w3.org/2000/svg'
+								viewBox='0 0 24 24'
+								width='24'
+								height='24'
+							>
+								<path fill='none' d='M0 0h24v24H0z' />
+								<path d='M9 2.003V2h10.998C20.55 2 21 2.455 21 2.992v18.016a.993.993 0 0 1-.993.992H3.993A1 1 0 0 1 3 20.993V8l6-5.997zM5.83 8H9V4.83L5.83 8zM11 4v5a1 1 0 0 1-1 1H5v10h14V4h-8z' />
+							</svg>
 						</div>
 					</label>
 					<input
@@ -96,7 +110,15 @@ const CreatePost = ({ post, id, close }) => {
 						onChange={loadImage}
 					/>
 					<button type='submit' aria-label='submit'>
-						<img src={sendIcon} alt='send' />
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							viewBox='0 0 24 24'
+							width='24'
+							height='24'
+						>
+							<path fill='none' d='M0 0h24v24H0z' />
+							<path d='M1.923 9.37c-.51-.205-.504-.51.034-.689l19.086-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.475.553-.717.07L11 13 1.923 9.37zm4.89-.2l5.636 2.255 3.04 6.082 3.546-12.41L6.812 9.17z' />
+						</svg>
 					</button>
 				</div>
 			</form>
