@@ -1,8 +1,7 @@
 import axios from 'axios';
-import SERVER_URI from '../serverUri';
 
 const axiosConfig = axios.create({
-	baseURL: `${SERVER_URI}/api/v1`,
+	baseURL: `${process.env.REACT_APP_SERVER_URL}/api/v1`,
 });
 
 export default axiosConfig;
