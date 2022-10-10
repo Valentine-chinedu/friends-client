@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import useFetch from './hooks/useFetch';
 import Cookies from 'js-cookie';
-import SERVER_URI from './serverUri';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from './features/userSlice';
@@ -48,7 +47,7 @@ function App() {
 			const query = `id=${id}`;
 			dispatch(getUsers({ customFetch }));
 			dispatch(setPosts({ customFetch }));
-			dispatch(setSocket(io(SERVER_URI, { query })));
+			dispatch(setSocket(io(process.env.REACT_APP_SERVER_URL, { query })));
 		}
 	}, [id, customFetch, dispatch]);
 
