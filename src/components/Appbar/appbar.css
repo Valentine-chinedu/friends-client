@@ -1,24 +1,38 @@
 .appbar {
 	display: flex;
+	width: 100%;
 	align-items: center;
-	gap: 1rem;
+	justify-content: center;
+	/* gap: 1rem; */
 	position: sticky;
-	height: 7rem;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	height: 6rem;
 	top: 0rem;
 	z-index: 2;
-	background-color: var(--primary-400);
+	margin-bottom: 2rem;
+	background-color: var(--primary-500);
+	border-bottom: 0.5rem;
+}
+
+.appbar h1 {
+	color: whitesmoke;
+	font-style: italic;
+	font-family: fantasy;
 }
 
 .appbar form {
 	display: flex;
 	align-items: center;
 	padding: 0.75rem 1.5rem;
-	background-color: var(--primary-500);
+	background-color: var(--primary-400);
 	width: 50%;
 	max-width: 500px;
 	border-radius: 10px;
 	gap: 1rem;
 	position: relative;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .appbar form button {
@@ -35,7 +49,6 @@
 	display: flex;
 	gap: 1rem;
 	align-items: center;
-	margin-left: auto;
 }
 
 .appbar__profile__dp {

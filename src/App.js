@@ -83,6 +83,7 @@ function App() {
 			<div className='container'>
 				<ThemeSwitch setTheme={setTheme} />
 				<Modal />
+
 				{id ? <Router /> : <Auth />}
 			</div>
 			<Backdrop show={isLoading}>

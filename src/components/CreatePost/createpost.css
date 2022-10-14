@@ -21,7 +21,11 @@
 .createpost button,
 label div {
 	background-color: rgba(255, 255, 255, 0.158);
-	width: 50px;
+	width: 45px;
+	height: 45px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	aspect-ratio: 1;
 	border-radius: 50%;
 	position: relative;

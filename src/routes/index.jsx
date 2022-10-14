@@ -32,14 +32,16 @@ const Router = () => {
 				<EditPost close={closeEditing} />
 			</Backdrop>
 			<Appbar />
-			<Routes>
-				<Route path='/' element={<Home />} />
-				<Route path='/post/:id' element={<SinglePost />} />
-				<Route path='/user/:id' element={<Profile />} />
-				<Route path='/chat' element={<Chat />} />
-				<Route path='/chat/messenger' element={<MessengerPage />} />
-				<Route path='*' element={<NotFound />} />
-			</Routes>
+			<div className='route-container'>
+				<Routes>
+					<Route path='/' element={<Home />} />
+					<Route path='/post/:id' element={<SinglePost />} />
+					<Route path='/user/:id' element={<Profile />} />
+					<Route path='/chat' element={<Chat />} />
+					<Route path='/chat/messenger' element={<MessengerPage />} />
+					<Route path='*' element={<NotFound />} />
+				</Routes>
+			</div>
 		</>
 	);
 };

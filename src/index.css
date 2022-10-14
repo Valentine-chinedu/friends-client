@@ -89,11 +89,12 @@ a {
 }
 
 .container {
-	max-width: 1700px;
+	max-width: 100%;
 	min-height: 100vh;
-	padding-inline: 2rem;
+	/* padding-inline: 2rem; */
 	margin-inline: auto;
 	display: flex;
+	align-items: center;
 	flex-direction: column;
 	padding-bottom: 2rem;
 }
@@ -108,6 +109,10 @@ input::placeholder {
 
 .green {
 	position: relative;
+}
+
+.route-container {
+	width: 1500px;
 }
 
 .sidebar {
@@ -154,6 +159,9 @@ input::placeholder {
 	.container {
 		padding-inline: 0.75rem;
 		max-width: 500px;
+	}
+	.route-container {
+		width: 100%;
 	}
 	.sidebar {
 		display: block;
