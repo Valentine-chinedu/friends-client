@@ -6,9 +6,6 @@ import { setIsLoading } from '../../features/modalSlice';
 import { loginService } from '../../services/authServices';
 import DataList from '../DataList/DataList';
 
-const demoPassword = process.env.REACT_APP_PASSWORD;
-const demoEmail = process.env.REACT_APP_EMAIL;
-
 const Login = ({ setIsRegistering }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -19,14 +16,6 @@ const Login = ({ setIsRegistering }) => {
 		e.preventDefault();
 		dispatch(setIsLoading(true));
 		const data = await customFetch(loginService, { email, password });
-		if (data) dispatch(login(data));
-		dispatch(setIsLoading(false));
-	};
-
-	const demoLogin = async (e) => {
-		e.preventDefault();
-		dispatch(setIsLoading(true));
-		const data = await customFetch(loginService, { demoEmail, demoPassword });
 		if (data) dispatch(login(data));
 		dispatch(setIsLoading(false));
 	};
@@ -44,20 +33,19 @@ const Login = ({ setIsRegistering }) => {
 				/>
 				<DataList email={email} setEmail={setEmail} />
 			</div>
-			<label htmlFor='login-password'>Password</label>
-			<input
-				type='password'
-				id='login-password'
-				placeholder='Top secret'
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-			/>
-			<div className='buttons'>
-				<button type='submit'>Login</button>
-				<button onClick={demoLogin()}>Demo</button>
+			<div className='email'>
+				<label htmlFor='login-password'>Password</label>
+				<input
+					type='password'
+					id='login-password'
+					placeholder='Top secret'
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+				/>
 			</div>
+			<button type='submit'>Login</button>
 			<p>
-				Don't have an account?
+				Don't have an account?{' '}
 				<span onClick={() => setIsRegistering(true)}>Register</span>
 			</p>
 		</form>

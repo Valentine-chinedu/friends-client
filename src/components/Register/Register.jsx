@@ -42,32 +42,36 @@ const Register = ({ setIsRegistering }) => {
 					setEmail={(value) => setForm((form) => ({ ...form, email: value }))}
 				/>
 			</div>
-			<label htmlFor='name'>Username</label>
-			<input
-				type='text'
-				id='name'
-				placeholder='john doe'
-				value={form.name}
-				required
-				onChange={(e) => updateForm('name', e)}
-			/>
-			<label htmlFor='dob'>Date of birth</label>
-			<input
-				type='date'
-				id='dob'
-				required
-				value={form.dob}
-				onChange={(e) => updateForm('dob', e)}
-			/>
-			<label htmlFor='password'>Password</label>
-			<input
-				type='password'
-				id='password'
-				placeholder='Top secret'
-				required
-				value={form.password}
-				onChange={(e) => updateForm('password', e)}
-			/>
+			<div className='email'>
+				<label htmlFor='name'>Username</label>
+				<input
+					type='text'
+					id='name'
+					placeholder='john doe'
+					value={form.name}
+					required
+					onChange={(e) => updateForm('name', e)}
+				/>
+				<label htmlFor='dob'>Date of birth</label>
+			</div>
+			<div className='email'>
+				<input
+					type='date'
+					id='dob'
+					required
+					value={form.dob}
+					onChange={(e) => updateForm('dob', e)}
+				/>
+				<label htmlFor='password'>Password</label>
+				<input
+					type='password'
+					id='password'
+					placeholder='Top secret'
+					required
+					value={form.password}
+					onChange={(e) => updateForm('password', e)}
+				/>
+			</div>
 			<button type='submit'>Register</button>
 			<p>
 				Already have an account?{' '}
