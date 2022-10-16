@@ -24,7 +24,7 @@ const Router = () => {
 		dispatch(setEditingPost({}));
 	};
 	return (
-		<>
+		<div className='route-container'>
 			<div className={isSidebarVisible ? 'sidebar visible' : 'sidebar'}>
 				<Online />
 			</div>
@@ -32,17 +32,16 @@ const Router = () => {
 				<EditPost close={closeEditing} />
 			</Backdrop>
 			<Appbar />
-			<div className='route-container'>
-				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/post/:id' element={<SinglePost />} />
-					<Route path='/user/:id' element={<Profile />} />
-					<Route path='/chat' element={<Chat />} />
-					<Route path='/chat/messenger' element={<MessengerPage />} />
-					<Route path='*' element={<NotFound />} />
-				</Routes>
-			</div>
-		</>
+
+			<Routes>
+				<Route path='/' element={<Home />} />
+				<Route path='/post/:id' element={<SinglePost />} />
+				<Route path='/user/:id' element={<Profile />} />
+				<Route path='/chat' element={<Chat />} />
+				<Route path='/chat/messenger' element={<MessengerPage />} />
+				<Route path='*' element={<NotFound />} />
+			</Routes>
+		</div>
 	);
 };
 
