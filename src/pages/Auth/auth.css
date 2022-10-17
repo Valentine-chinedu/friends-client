@@ -7,16 +7,9 @@
 	padding: 1rem;
 }
 
-.email {
-	width: 100%;
-}
-
 .login,
 .register {
 	position: absolute;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	left: 50%;
 	top: 50%;
 	backface-visibility: hidden;
@@ -39,8 +32,10 @@
 
 .auth p {
 	margin-inline: auto;
+	line-height: 1.8em;
 	width: max-content;
 	margin-top: 1.5rem;
+	text-align: center;
 }
 
 .auth form {
@@ -70,7 +65,7 @@
 
 .auth button {
 	background: var(--primary-400);
-	width: 45%;
+	width: 100%;
 	color: white;
 	padding: 0.75rem;
 	border-radius: 10px;

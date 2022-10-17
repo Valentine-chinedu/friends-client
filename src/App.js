@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 //utilities
 import { io } from 'socket.io-client';
-import useFetch from './hooks/useFetch';
 import Cookies from 'js-cookie';
+import useFetch from './hooks/useFetch.js';
+
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from './features/userSlice';
+import { login } from './features/userSlice.js';
 import { setSocket } from './features/socketSlice';
-import { showModal } from './features/modalSlice';
+import { showModal } from './features/modalSlice.js';
 import {
 	addMessages,
 	clearMessage,
@@ -29,7 +30,7 @@ function App() {
 	const customFetch = useFetch();
 	const [theme, setTheme] = useState('dark');
 	const {
-		user: { id },
+		user: { id, isGuest },
 		modal: { isLoading },
 		socket: { socket },
 		message: { to, conversationID },
@@ -47,9 +48,10 @@ function App() {
 			const query = `id=${id}`;
 			dispatch(getUsers({ customFetch }));
 			dispatch(setPosts({ customFetch }));
-			dispatch(setSocket(io(process.env.REACT_APP_SERVER_URL, { query })));
+			if (!isGuest)
+				dispatch(setSocket(io(process.env.REACT_APP_SERVER_URL, { query })));
 		}
-	}, [id, customFetch, dispatch]);
+	}, [id, customFetch, dispatch, isGuest]);
 
 	//socket events
 	useEffect(() => {
@@ -83,7 +85,6 @@ function App() {
 			<div className='container'>
 				<ThemeSwitch setTheme={setTheme} />
 				<Modal />
-
 				{id ? <Router /> : <Auth />}
 			</div>
 			<Backdrop show={isLoading}>
