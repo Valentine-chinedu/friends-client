@@ -81,7 +81,7 @@ const Appbar = () => {
 				)}
 			</div>
 			<Link to='/'>
-				{/* <svg
+				<svg
 					className='home-icon'
 					xmlns='http://www.w3.org/2000/svg'
 					viewBox='0 0 24 24'
@@ -93,8 +93,7 @@ const Appbar = () => {
 						fill='rgba(255,255,255,1)'
 						d='M21 20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.49a1 1 0 0 1 .386-.79l8-6.222a1 1 0 0 1 1.228 0l8 6.222a1 1 0 0 1 .386.79V20zm-2-1V9.978l-7-5.444-7 5.444V19h14z'
 					/>
-				</svg> */}
-				<h1>FRIENDS</h1>
+				</svg>
 			</Link>
 			<form onSubmit={searchHandler} className='searchform'>
 				<button type='submit' aria-label='search'>
