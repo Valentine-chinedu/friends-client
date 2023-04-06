@@ -9,9 +9,10 @@ import {
 } from '../../features/messageSlice';
 import SingleChat from '../SingleChat/SingleChat';
 import Input from '../Input/Input';
-import dp from '../../assets/dp.jpg';
+import { dp } from '../../assets';
 import './messenger.css';
 import Options from '../Options/Options';
+import useConfirmation from '../confirmation/useConfirmation';
 
 const Messenger = () => {
 	const {
@@ -47,15 +48,26 @@ const Messenger = () => {
 		dispatch(clearMessage({ conversationID }));
 	};
 
+	const { Confirmation: ConfirmDelete, toggleShow: toggleDelete } =
+		useConfirmation(
+			deleteHandler,
+			'Are you sure, you want to delete this chat'
+		);
+
+	const { Confirmation: ConfirmClear, toggleShow: toggleClear } =
+		useConfirmation(clearHandler, 'Are you sure, you want to clear this chat');
+
 	const options = {
-		'Delete Chat': deleteHandler,
-		'Clear Chat': clearHandler,
+		'Delete Chat': toggleDelete,
+		'Clear Chat': toggleClear,
 	};
 
 	return (
 		<section className='chat__page__messenger'>
 			{conversationID ? (
 				<>
+					{ConfirmDelete}
+					{ConfirmClear}
 					<header>
 						<img
 							src={userDetails.profileImage || dp}

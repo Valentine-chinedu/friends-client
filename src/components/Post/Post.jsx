@@ -6,19 +6,30 @@ import {
 	commentPost,
 	likePost,
 } from '../../features/postSlice';
-import dp from '../../assets/dp.jpg';
+import { dp } from '../../assets';
 import Input from '../Input/Input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import Options from '../Options/Options';
 import './post.css';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { BiCommentDetail } from 'react-icons/bi';
+import { IoIosShareAlt } from 'react-icons/io';
 import getDateString from '../../utils/getDateString';
+import Share from './Share';
+import { useState } from 'react';
+import Backdrop from '../Backdrop/Backdrop';
+import ImageViewer from './ImageViewer';
+import useConfirmation from '../confirmation/useConfirmation';
 
 const Post = ({ singlepost, post }) => {
 	const createdAt = getDateString(post.createdAt);
+	const [showShare, setShowShare] = useState(false);
+	const [showImage, setShowImage] = useState(false);
 
 	const dispatch = useDispatch();
 	const customFetch = useFetch();
+	const navigate = useNavigate();
 
 	//global states
 	const {
@@ -39,14 +50,20 @@ const Post = ({ singlepost, post }) => {
 
 	const deleteHandler = () => {
 		dispatch(deletePost({ customFetch, id: post._id }));
+		singlepost && navigate(-1);
 	};
 
 	const editHandler = () => {
 		dispatch(setEditingPost(post));
 	};
 
+	const { Confirmation, toggleShow } = useConfirmation(
+		deleteHandler,
+		'Are you sure, You want to delete the post?'
+	);
+
 	const options = {
-		Delete: deleteHandler,
+		Delete: toggleShow,
 		Edit: editHandler,
 	};
 
@@ -72,15 +89,27 @@ const Post = ({ singlepost, post }) => {
 					: `You and ${post.likes.length - 1} others`
 				: post.likes?.length;
 		}
-		return false;
+		return '';
 	};
 
 	const postDetails = () => {
+		const toggleImage = () => setShowImage(!showImage);
 		return (
 			<>
 				{post.caption && getParagraphs(post.caption)}
+				{singlepost && (
+					<Backdrop show={showImage} onClose={toggleImage}>
+						<ImageViewer image={post.image?.src} />
+					</Backdrop>
+				)}
 				{post.image?.src && (
-					<img src={post.image?.src} alt='post_image' className='post__image' />
+					<img
+						src={post.image.src}
+						alt='post_image'
+						className='post__image'
+						loading='lazy'
+						onClick={toggleImage}
+					/>
 				)}
 			</>
 		);
@@ -90,6 +119,10 @@ const Post = ({ singlepost, post }) => {
 		<article
 			className={singlepost ? 'post halfborder single' : 'post gradient-border'}
 		>
+			{Confirmation}
+			<Backdrop show={showShare} onClose={() => setShowShare(false)}>
+				<Share post={post} />
+			</Backdrop>
 			<header>
 				<Link
 					to={`/user/${post.createdBy}`}
@@ -98,6 +131,7 @@ const Post = ({ singlepost, post }) => {
 					<img
 						src={post.userDetails?.image || dp}
 						alt='profileImage'
+						loading='lazy'
 						className='post__dp roundimage'
 					/>
 				</Link>
@@ -105,51 +139,35 @@ const Post = ({ singlepost, post }) => {
 					<h3>{post.userDetails?.name}</h3>
 					<p>{createdAt}</p>
 				</div>
-				{isOwnPost && <Options options={options} />}
+				{isOwnPost && <Options options={options} id={post._id} />}
 			</header>
 			<div className='post__details'>
 				{singlepost ? (
 					postDetails()
 				) : (
-					<Link to={`/post/${post._id}`} className='post__details'>
-						{postDetails()}
-					</Link>
+					<Link to={`/post/${post._id}`}>{postDetails()}</Link>
 				)}
 			</div>
 			<div className='post__footer'>
-				<div className='post__reactions'>
-					<img
-						src={
-							isLiked ? (
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									viewBox='0 0 24 24'
-									width='24'
-									height='24'
-								>
-									<path fill='none' d='M0 0H24V24H0z' />
-									<path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z' />
-								</svg>
-							) : (
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									viewBox='0 0 24 24'
-									width='24'
-									height='24'
-								>
-									<path fill='none' d='M0 0H24V24H0z' />
-									<path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z' />
-								</svg>
-							)
-						}
-						alt='like'
-						onClick={likeHandler}
-					/>
-					<p>{getNumberOfLikes() || ''}</p>
+				<div className='group'>
+					<div onClick={likeHandler}>
+						{isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
+					</div>
+					<p>{getNumberOfLikes()}</p>
 				</div>
 				{singlepost || (
 					<Input placeholder={'Write a comment...'} handler={commentHandler} />
 				)}
+				<Link
+					className={singlepost ? 'comment__icon group' : 'group'}
+					to={`/post/${post._id}`}
+				>
+					<BiCommentDetail />
+					<p>{post.comments.length}</p>
+				</Link>
+				<div className='group' onClick={() => setShowShare(true)} title='share'>
+					<IoIosShareAlt />
+				</div>
 			</div>
 		</article>
 	);
