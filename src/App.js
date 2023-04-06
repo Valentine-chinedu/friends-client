@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import Cookies from 'js-cookie';
 import useFetch from './hooks/useFetch.js';
-
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from './features/userSlice.js';
@@ -24,6 +23,7 @@ import Loading from './components/Loading/Loading.jsx';
 import Backdrop from './components/Backdrop/Backdrop.jsx';
 import ThemeSwitch from './components/ThemeSwitch/ThemeSwitch.jsx';
 import Router from './routes';
+import Online from './components/Online/Online.jsx';
 
 function App() {
 	const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function App() {
 	const [theme, setTheme] = useState('dark');
 	const {
 		user: { id, isGuest },
-		modal: { isLoading },
+		modal: { isLoading, isSidebarVisible },
 		socket: { socket },
 		message: { to, conversationID },
 	} = useSelector((state) => state);
@@ -39,7 +39,8 @@ function App() {
 	//login
 	useEffect(() => {
 		const user = Cookies.get('user');
-		user && dispatch(login(JSON.parse(user)));
+		if (user) dispatch(login(JSON.parse(user)));
+		else dispatch(login({ id: 'guest', isGuest: true }));
 	}, [dispatch]);
 
 	//get users and chats and init socket
@@ -83,6 +84,10 @@ function App() {
 	return (
 		<div className={'app ' + theme}>
 			<div className='container'>
+				<div className={isSidebarVisible ? 'sidebar visible' : 'sidebar'}>
+					<ThemeSwitch setTheme={setTheme} />
+					<Online />
+				</div>
 				<ThemeSwitch setTheme={setTheme} />
 				<Modal />
 				{id ? <Router /> : <Auth />}
