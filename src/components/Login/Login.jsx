@@ -37,16 +37,14 @@ const Login = ({ setIsRegistering }) => {
 				/>
 				<DataList email={email} setEmail={setEmail} />
 			</div>
-			<div className='email'>
-				<label htmlFor='login-password'>Password</label>
-				<input
-					type='password'
-					id='login-password'
-					placeholder='Top secret'
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-			</div>
+			<label htmlFor='login-password'>Password</label>
+			<input
+				type='password'
+				id='login-password'
+				placeholder='Top secret'
+				value={password}
+				onChange={(e) => setPassword(e.target.value)}
+			/>
 			<button type='submit'>Login</button>
 			<p>
 				Don't have an account? <br />
