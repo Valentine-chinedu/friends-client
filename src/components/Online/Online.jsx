@@ -13,7 +13,7 @@ const Online = () => {
 	const dispatch = useDispatch();
 
 	const allUsers = () => {
-		return users.map((user) => (
+		return users?.map((user) => (
 			<Link
 				to={`/user/${user._id}`}
 				key={user._id}
@@ -23,6 +23,7 @@ const Online = () => {
 					<div>
 						<img
 							src={user.profileImage || dp}
+							loading='lazy'
 							alt={user.name + ' image'}
 							className='roundimage'
 						/>
@@ -34,7 +35,7 @@ const Online = () => {
 	};
 
 	const onlineUsers = () => {
-		const _usersOnline = users.filter((user) =>
+		const _usersOnline = users?.filter((user) =>
 			usersOnline.some((u) => u.id === user._id)
 		);
 		return _usersOnline.map((user) => (
@@ -47,6 +48,7 @@ const Online = () => {
 					<div className='green'>
 						<img
 							src={user.profileImage || dp}
+							loading='lazy'
 							alt={user.name + ' image'}
 							className='roundimage'
 						/>
