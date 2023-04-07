@@ -19,7 +19,7 @@ const Gallery = () => {
 	return (
 		<section className='gallery'>
 			<Backdrop show={isMainGalleryOpen} onClose={hideGallery}>
-				<MainGallery posts={postsWithImages} close={hideGallery} />
+				<MainGallery posts={postsWithImages} />
 			</Backdrop>
 			<div className='gallery__images'>
 				{postsWithImages.map(
