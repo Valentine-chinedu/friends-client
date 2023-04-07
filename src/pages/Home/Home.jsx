@@ -19,6 +19,8 @@ const Home = () => {
 		user: { id, isGuest },
 	} = useSelector((state) => state);
 
+	console.log(posts);
+
 	const customFetch = useFetch();
 	const dispatch = useDispatch();
 
