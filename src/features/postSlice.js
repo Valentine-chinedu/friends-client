@@ -1,9 +1,12 @@
 import {
 	commentPostService,
 	createPostService,
+	deleteCommentService,
 	deletePostService,
+	editCommentService,
 	fetchPostsService,
 	likePostService,
+	replyCommentService,
 	updatePostService,
 } from '../services/postServices';
 import { showModal } from './modalSlice';
@@ -12,10 +15,18 @@ import { logout, update } from './userSlice';
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
 const initialState = {
-	allPosts: { posts: [], page: 0 },
+	allPosts: { posts: [], page: 0, isLoading: false },
 	userPosts: { posts: [], page: 0 },
 	editingPost: {},
 	singlePost: {},
+};
+
+const handleGuest = (isGuest, dispatch) => {
+	if (isGuest) {
+		dispatch(showModal({ msg: 'You must be logged in to do this action!!' }));
+		return true;
+	}
+	return false;
 };
 
 export const setPosts = createAsyncThunk(
@@ -36,10 +47,7 @@ export const addPost = createAsyncThunk('post/add', async (props, thunkAPI) => {
 	const {
 		user: { isGuest },
 	} = getState();
-	if (isGuest)
-		return dispatch(
-			showModal({ msg: 'You must be logged in to do this action!!' })
-		);
+	if (handleGuest(isGuest, dispatch)) return rejectWithValue();
 	dispatch(showModal({}));
 	const data = await customFetch(createPostService, formData);
 	if (!data) return rejectWithValue();
@@ -56,10 +64,7 @@ export const updatePost = createAsyncThunk(
 			user: { isGuest },
 			post: { singlePost },
 		} = getState();
-		if (isGuest)
-			return dispatch(
-				showModal({ msg: 'You must be logged in to do this action!!' })
-			);
+		if (handleGuest(isGuest, dispatch)) return rejectWithValue();
 		dispatch(showModal({}));
 		const data = await customFetch(updatePostService, { id, form: formData });
 		if (!data) return rejectWithValue();
@@ -76,18 +81,11 @@ export const likePost = createAsyncThunk(
 		const { customFetch, id, isLiked } = props;
 		const { dispatch, rejectWithValue, getState } = thunkAPI;
 		const {
-			user: { isGuest },
-			post: { singlePost },
+			user: { isGuest, id: userId },
 		} = getState();
-		if (isGuest)
-			return dispatch(
-				showModal({ msg: 'You must be logged in to do this action!!' })
-			);
-		const data = await customFetch(likePostService, { id, add: !isLiked });
-		if (!data) return rejectWithValue();
-		if (singlePost._id === id)
-			dispatch(postSlice.actions.setSinglePost(data.post));
-		dispatch(postSlice.actions.updatePosts(data.post));
+		if (handleGuest(isGuest, dispatch)) return rejectWithValue();
+		customFetch(likePostService, { id, add: !isLiked });
+		return { id, userId, add: !isLiked };
 	}
 );
 
@@ -100,10 +98,7 @@ export const commentPost = createAsyncThunk(
 			user: { isGuest },
 			post: { singlePost },
 		} = getState();
-		if (isGuest)
-			return dispatch(
-				showModal({ msg: 'You must be logged in to do this action!!' })
-			);
+		if (handleGuest(isGuest, dispatch)) return rejectWithValue();
 		const data = await customFetch(commentPostService, { id, comment });
 		if (!data) return rejectWithValue();
 		if (singlePost._id === id)
@@ -116,18 +111,72 @@ export const deletePost = createAsyncThunk(
 	'post/delete',
 	async (props, thunkAPI) => {
 		const { customFetch, id } = props;
-		const { dispatch, fulfillWithValue, getState } = thunkAPI;
+		const { dispatch, fulfillWithValue, getState, rejectWithValue } = thunkAPI;
 		const {
 			user: { isGuest },
 		} = getState();
-		if (isGuest)
-			return dispatch(
-				showModal({ msg: 'You must be logged in to do this action!!' })
-			);
-		dispatch(showModal({}));
+		if (handleGuest(isGuest, dispatch)) return rejectWithValue();
 		await customFetch(deletePostService, { id });
 		dispatch(showModal({ msg: 'Post Deleted' }));
 		return fulfillWithValue(id);
+	}
+);
+
+export const deleteComment = createAsyncThunk(
+	'post/comment/delete',
+	async (props, thunkAPI) => {
+		const { customFetch, postId, commentId, replyId } = props;
+		const { dispatch, fulfillWithValue, getState, rejectWithValue } = thunkAPI;
+		const {
+			user: { isGuest },
+		} = getState();
+		if (handleGuest(isGuest, dispatch)) return rejectWithValue();
+		const data = await customFetch(deleteCommentService, {
+			postId,
+			commentId,
+			replyId,
+		});
+		dispatch(showModal({ msg: 'Comment Deleted' }));
+		return fulfillWithValue(data);
+	}
+);
+
+export const editComment = createAsyncThunk(
+	'post/comment/edit',
+	async (props, thunkAPI) => {
+		const { customFetch, postId, commentId, comment, replyId } = props;
+		const { dispatch, rejectWithValue, getState, fulfillWithValue } = thunkAPI;
+		const {
+			user: { isGuest },
+		} = getState();
+		if (handleGuest(isGuest, dispatch)) return rejectWithValue();
+		const data = await customFetch(editCommentService, {
+			postId,
+			commentId,
+			comment,
+			replyId,
+		});
+		dispatch(showModal({ msg: 'Comment Edited' }));
+		return fulfillWithValue(data);
+	}
+);
+
+export const replyComment = createAsyncThunk(
+	'post/comment/reply',
+	async (props, thunkAPI) => {
+		const { customFetch, id, commentId, comment, replyTo } = props;
+		const { dispatch, rejectWithValue, getState, fulfillWithValue } = thunkAPI;
+		const {
+			user: { isGuest },
+		} = getState();
+		if (handleGuest(isGuest, dispatch)) return rejectWithValue();
+		const data = await customFetch(replyCommentService, {
+			id,
+			commentId,
+			comment,
+			replyTo,
+		});
+		return fulfillWithValue(data);
 	}
 );
 
@@ -173,6 +222,26 @@ const postSlice = createSlice({
 				(post) => post._id !== action.payload
 			);
 		},
+		[likePost.fulfilled]: (state, { payload }) => {
+			const { singlePost, allPosts, userPosts } = state;
+			const { id, userId, add } = payload;
+			if (singlePost._id === id) {
+				add
+					? singlePost.likes.push(userId)
+					: (singlePost.likes = singlePost.likes.filter(
+							(ele) => ele !== userId
+					  ));
+			}
+			let post = allPosts.posts.find((post) => post._id === id);
+			let _post = userPosts.posts.find((post) => post._id === id);
+			if (add) {
+				post?.likes.push(userId);
+				_post?.likes.push(userId);
+			} else {
+				post && (post.likes = post.likes.filter((ele) => ele !== userId));
+				_post && (_post.likes = _post.likes.filter((ele) => ele !== userId));
+			}
+		},
 		[update.type]: (state, action) => {
 			const { name, profileImage, id } = action.payload;
 			state.allPosts.posts = state.allPosts.posts.map((post) => {
@@ -198,8 +267,26 @@ const postSlice = createSlice({
 				return post;
 			});
 		},
+		[deleteComment.fulfilled]: (state, action) => {
+			const { post } = action.payload;
+			state.singlePost = post;
+			state.allPosts.posts = state.allPosts.posts.map((_post) =>
+				_post._id === post._id ? post : _post
+			);
+		},
+		[editComment.fulfilled]: (state, action) => {
+			const { post } = action.payload;
+			state.singlePost = post;
+		},
+		[replyComment.fulfilled]: (state, action) => {
+			const { post } = action.payload;
+			state.singlePost = post;
+		},
 		[logout.type]: (state, action) => {
 			return initialState;
+		},
+		[setPosts.pending]: (state) => {
+			state.allPosts.isLoading = true;
 		},
 	},
 });
