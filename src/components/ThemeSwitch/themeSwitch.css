@@ -1,6 +1,6 @@
 .theme-switch {
 	position: fixed;
-	left: 2rem;
+	left: 3rem;
 	bottom: 7rem;
 	height: 3rem;
 	aspect-ratio: 1;
@@ -61,6 +61,7 @@
 	aspect-ratio: 1;
 	border-radius: 50%;
 	background-color: white;
+	color: var(--primary-400);
 	border: 1px solid rgba(255, 255, 255, 0.473);
 	cursor: pointer;
 	position: relative;
@@ -113,5 +114,31 @@
 @keyframes beat {
 	50% {
 		transform: scale(1.2);
+	}
+}
+
+@media (max-width: 800px) {
+	.container > .theme-switch {
+		display: none;
+	}
+	.theme-switch {
+		position: absolute;
+		right: 1rem;
+		left: initial;
+		bottom: 2rem;
+	}
+	.themes {
+		left: initial;
+		right: 50%;
+		border-radius: 100vmax 0 0 100vmax;
+	}
+	.theme-switch.open .switch {
+		transform: rotate(-90deg);
+	}
+	.themes > div:first-of-type {
+		margin-left: 0;
+	}
+	.themes > div:last-of-type {
+		margin-right: 1rem;
 	}
 }
