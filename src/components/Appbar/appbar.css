@@ -39,7 +39,7 @@
 }
 
 .appbar__profile__dp {
-	width: 40px;
+	width: 30px;
 	aspect-ratio: 1;
 	object-fit: cover;
 	border-radius: 50%;
