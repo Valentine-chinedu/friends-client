@@ -84,8 +84,8 @@ const CreatePost = ({ post, id, close }) => {
 				)}
 				<div className='btns'>
 					<label htmlFor={id || 'image'} aria-label='select file'>
-						<div>
-							<AiOutlineFile />
+						<div className='file'>
+							<AiOutlineFile size={18} />
 						</div>
 					</label>
 					<input
@@ -94,8 +94,8 @@ const CreatePost = ({ post, id, close }) => {
 						accept='image/png, image/jpeg'
 						onChange={loadImage}
 					/>
-					<button type='submit' aria-label='submit'>
-						<AiOutlineSend />
+					<button className='send' type='submit' aria-label='submit'>
+						<AiOutlineSend size={18} />
 					</button>
 				</div>
 			</form>

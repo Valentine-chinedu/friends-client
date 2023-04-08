@@ -59,14 +59,18 @@ const Appbar = () => {
 				className='hamburger'
 				onClick={() => dispatch(toggleSidebar(!isSidebarVisible))}
 			>
-				{isSidebarVisible ? <AiOutlineClose /> : <HiOutlineMenu />}
+				{isSidebarVisible ? (
+					<AiOutlineClose size={20} />
+				) : (
+					<HiOutlineMenu size={20} />
+				)}
 			</div>
 			<Link to='/'>
-				<HiOutlineHome className='home-icon' />
+				<HiOutlineHome size={24} />
 			</Link>
 			<form onSubmit={searchHandler} className='searchform'>
 				<button type='submit' aria-label='search'>
-					<HiOutlineSearch />
+					<HiOutlineSearch size={20} />
 				</button>
 				<input
 					type='text'
@@ -97,7 +101,7 @@ const Appbar = () => {
 							/>
 						</Link>
 						<Link to='/chat'>
-							<HiOutlineChat className='chat' />
+							<HiOutlineChat size={20} />
 						</Link>
 					</>
 				)}

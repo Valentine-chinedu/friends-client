@@ -77,7 +77,7 @@ const ProfileCard = ({ id, isOwnProfile }) => {
 					/>
 					{isOwnProfile && (
 						<div className='dp-upload'>
-							<HiOutlineCamera onClick={() => setIsUploading(true)} />
+							<HiOutlineCamera size={20} onClick={() => setIsUploading(true)} />
 						</div>
 					)}
 				</div>
