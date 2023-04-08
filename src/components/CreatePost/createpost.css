@@ -27,6 +27,18 @@ label div {
 	position: relative;
 }
 
+.file {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.send {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 input[type='file'] {
 	display: none;
 }
