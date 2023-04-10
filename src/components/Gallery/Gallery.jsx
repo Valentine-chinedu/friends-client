@@ -22,7 +22,7 @@ const Gallery = () => {
 				<MainGallery posts={postsWithImages} />
 			</Backdrop>
 			<div className='gallery__images'>
-				{postsWithImages.map(
+				{postsWithImages?.map(
 					(v, i) =>
 						i < 3 && (
 							<Link to={`/post/${v._id}`} key={v._id}>
@@ -31,7 +31,7 @@ const Gallery = () => {
 						)
 				)}
 			</div>
-			{postsWithImages.length > 3 && (
+			{postsWithImages?.length > 3 && (
 				<button onClick={() => setIsMainGalleryOpen(true)}>View All</button>
 			)}
 		</section>

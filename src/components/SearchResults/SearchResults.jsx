@@ -7,7 +7,7 @@ const SearchResults = ({ searchResult, reset }) => {
 		<div className='search-results'>
 			<div>
 				<h3>Posts</h3>
-				{searchResult.posts?.map((post) => (
+				{searchResult?.posts?.map((post) => (
 					<Link to={`/post/${post._id}`} key={post._id}>
 						<p onClick={reset}>{post.caption}</p>
 					</Link>
@@ -15,7 +15,7 @@ const SearchResults = ({ searchResult, reset }) => {
 			</div>
 			<div>
 				<h3>Users</h3>
-				{searchResult.users?.map((user) => (
+				{searchResult?.users?.map((user) => (
 					<Link to={`/user/${user._id}`} key={user._id}>
 						<p onClick={reset}>{user.name}</p>
 					</Link>

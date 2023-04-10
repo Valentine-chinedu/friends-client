@@ -8,7 +8,7 @@ const Posts = ({ posts, isLoading }) => {
 			{isLoading ? (
 				<Loading />
 			) : (
-				posts.map((post) => <Post post={post} key={post._id} />)
+				posts?.map((post) => <Post post={post} key={post._id} />)
 			)}
 		</div>
 	);

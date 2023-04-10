@@ -38,7 +38,7 @@ const Online = () => {
 		const _usersOnline = users?.filter((user) =>
 			usersOnline.some((u) => u.id === user._id)
 		);
-		return _usersOnline.map((user) => (
+		return _usersOnline?.map((user) => (
 			<Link
 				to={`/user/${user._id}`}
 				key={user._id}

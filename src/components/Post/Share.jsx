@@ -86,7 +86,7 @@ const Share = ({ post }) => {
 		<article className='share'>
 			<h2>Share</h2>
 			<div className='share__items'>
-				{shareItems.map((item, i) => (
+				{shareItems?.map((item, i) => (
 					<ShareItem item={item} key={i} />
 				))}
 			</div>

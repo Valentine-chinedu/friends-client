@@ -12,7 +12,7 @@ const Chat = () => {
 	return (
 		<main className='chat__page'>
 			<section className='chat__page__cards'>
-				{chats.map((chat) => (
+				{chats?.map((chat) => (
 					<ChatCard chat={chat} key={chat._id} />
 				))}
 			</section>

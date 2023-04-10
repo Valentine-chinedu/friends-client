@@ -50,20 +50,20 @@ const SetupProfile = ({ close, user }) => {
 			<label htmlFor=''>Username</label>
 			<input
 				type='text'
-				value={userDetails.name}
+				value={userDetails?.name}
 				required
 				onChange={(e) => _updateUser('name', e)}
 			/>
 			<label htmlFor=''>About</label>
 			<input
 				type='text'
-				value={userDetails.about}
+				value={userDetails?.about}
 				onChange={(e) => _updateUser('about', e)}
 			/>
 			<label htmlFor=''>Location</label>
 			<input
 				type='text'
-				value={userDetails.location}
+				value={userDetails?.location}
 				onChange={(e) => _updateUser('location', e)}
 			/>
 			<button type='submit'>Continue</button>
