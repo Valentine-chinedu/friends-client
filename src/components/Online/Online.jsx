@@ -40,8 +40,8 @@ const Online = () => {
 		);
 		return _usersOnline?.map((user) => (
 			<Link
-				to={`/user/${user._id}`}
-				key={user._id}
+				to={`/user/${user?._id}`}
+				key={user?._id}
 				onClick={() => dispatch(toggleSidebar(false))}
 			>
 				<div className='user' title={user.name}>
@@ -60,9 +60,9 @@ const Online = () => {
 
 	return (
 		<section className='online'>
-			<h2>Users Online - {usersOnline.length}</h2>
+			<h2>Users Online - {usersOnline?.length}</h2>
 			<div className='online-users'>{onlineUsers()}</div>
-			<h2>All Users - {users.length}</h2>
+			<h2>All Users - {users?.length}</h2>
 			{allUsers()}
 		</section>
 	);
