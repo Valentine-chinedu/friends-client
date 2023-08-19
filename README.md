@@ -6,6 +6,16 @@
 
 fullstack Social Media web application.
 
+## Features
+
+- User Profile
+- News Feed From Followers
+- Create and Read Posts
+- Likes and comments
+- Upload Media
+- Direct Chart with Friends
+- Notification
+
 ## Tools
 
 - Reactjs
