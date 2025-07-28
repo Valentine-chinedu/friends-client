@@ -20,7 +20,7 @@ import {
 const Appbar = () => {
 	//global states
 	const {
-		user: { id, profileImage, isGuest },
+		user: { id, profileImage },
 		modal: { isSidebarVisible },
 	} = useSelector((state) => state);
 
@@ -78,19 +78,17 @@ const Appbar = () => {
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}
 				/>
-				<button onClick={reset} type='button' aria-label='clear search'>
-					<AiOutlineClose className='close' />
-				</button>
+				{query && (
+					<button onClick={reset} type='button' aria-label='clear search'>
+						<AiOutlineClose className='close' />
+					</button>
+				)}
 				{(searchResult.posts || searchResult.users) && (
 					<SearchResults searchResult={searchResult} reset={reset} />
 				)}
 			</form>
 			<nav className='appbar__profile'>
-				{isGuest ? (
-					<button className='login-btn' onClick={gotoLogin}>
-						Login
-					</button>
-				) : (
+				{id ? (
 					<>
 						<Link to={`/user/${id}`}>
 							<img
@@ -104,6 +102,10 @@ const Appbar = () => {
 							<HiOutlineChat size={20} />
 						</Link>
 					</>
+				) : (
+					<button className='login-btn' onClick={gotoLogin}>
+						Login
+					</button>
 				)}
 			</nav>
 		</header>
