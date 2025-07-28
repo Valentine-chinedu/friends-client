@@ -20,8 +20,19 @@ const Login = ({ setIsRegistering }) => {
 		dispatch(setIsLoading(false));
 	};
 
-	const guestHandler = () => {
-		dispatch(login({ id: 'guest', isGuest: true }));
+	const guestHandler = async () => {
+		dispatch(setIsLoading(true));
+		const guestEmail = process.env.REACT_APP_GUEST_EMAIL?.replace(/['"]+/g, '');
+		const guestPassword = process.env.REACT_APP_GUEST_PASSWORD?.replace(
+			/['"]+/g,
+			''
+		);
+		const data = await customFetch(loginService, {
+			email: guestEmail,
+			password: guestPassword,
+		});
+		if (data) dispatch(login(data));
+		dispatch(setIsLoading(false));
 	};
 
 	return (
@@ -49,7 +60,7 @@ const Login = ({ setIsRegistering }) => {
 			<p>
 				Don't have an account? <br />
 				<span onClick={() => setIsRegistering(true)}>Register</span> or{' '}
-				<span onClick={guestHandler}>Continue as a guest</span>
+				<span onClick={guestHandler}>Login as a guest</span>
 			</p>
 		</form>
 	);
