@@ -8,7 +8,6 @@ import ProfileCard from '../../components/ProfileCard/ProfileCard';
 import { setAllPosts } from '../../features/postSlice';
 import useFetch from '../../hooks/useFetch';
 import { fetchPostsService } from '../../services/postServices';
-import Guest from '../../components/ProfileCard/Guest';
 import './home.css';
 
 const Home = () => {
@@ -16,7 +15,7 @@ const Home = () => {
 		post: {
 			allPosts: { posts, page },
 		},
-		user: { id, isGuest },
+		user: { id },
 	} = useSelector((state) => state);
 
 	console.log(posts);
@@ -33,11 +32,11 @@ const Home = () => {
 	return (
 		<section className='home'>
 			<div className='home__left'>
-				{isGuest ? <Guest /> : <ProfileCard id={id} isOwnProfile />}
+				<ProfileCard id={id} isOwnProfile />
 			</div>
 			<InfinityScroll getNextPage={getNextPage}>
 				<main className='home__center'>
-					{isGuest || <CreatePost />}
+					<CreatePost />
 					<Posts posts={posts} />
 				</main>
 			</InfinityScroll>
