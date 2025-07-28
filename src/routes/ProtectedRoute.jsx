@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-	const { isGuest } = useSelector((state) => state.user);
-	return isGuest ? <Navigate to='/' /> : children;
+	const { id } = useSelector((state) => state.user);
+	return id ? children : <Navigate to='/' />;
 };
 
 export default ProtectedRoute;
