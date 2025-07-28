@@ -12,11 +12,11 @@ export const getUsers = createAsyncThunk(
 	'users/getUsers',
 	async (props, thunkAPI) => {
 		const { customFetch } = props;
-		const { fulfillWithValue, rejectWithValue, dispatch, getState } = thunkAPI;
+		const { fulfillWithValue, rejectWithValue, dispatch } = thunkAPI;
 		const data = await customFetch(fetchUsersService);
 		if (!data) return rejectWithValue();
 		const { users } = data;
-		if (!getState().user.isGuest) dispatch(getAllChats({ customFetch, users }));
+		dispatch(getAllChats({ customFetch, users }));
 		return fulfillWithValue(users);
 	}
 );
